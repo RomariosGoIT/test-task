@@ -1,28 +1,32 @@
 import React from 'react';
+import gold from '../1st.svg';
+import bronze from '../2nd.svg';
+import silver from '../3rd.svg';
 
 const TopThree = ({ topThree, allData }) => {
-  const top = allData
-    .filter(item => topThree.indexOf(item.pageviews) >= 0)
-    .sort((a, b) => b.pageviews - a.pageviews);
-
   let id = 0;
+  let number = 0;
   let show = '';
-  const elements = top.map(item => {
+
+  const elements = allData.map(item => {
     const { name, count_pub, pageviews } = item;
     let leter = name.slice(0, 1);
+    number++;
     id++;
     if (topThree[0] === pageviews) {
-      show = 'Gold';
+      show = <img className="list__icon" src={gold} alt="icon" />;
     }
     if (topThree[1] === pageviews) {
-      show = 'Bronse';
+      show = <img className="list__icon" src={bronze} alt="icon" />;
     }
 
     if (topThree[2] === pageviews) {
-      show = 'Silver';
+      show = <img className="list__icon" src={silver} alt="icon" />;
     }
+
     return (
       <li key={id} className="list-group-item list__item">
+        <span>{number}</span>
         <span className="list__later">{leter}</span>
         <span>
           <p>{name}</p>

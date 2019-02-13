@@ -2,12 +2,15 @@ import React from 'react';
 
 const TodoListItem = ({ todos }) => {
   let id = 0;
+  let number = 3;
   const elements = todos.map(item => {
+    number++;
     const { name, count_pub, pageviews } = item;
     let leter = name.slice(0, 1);
     id++;
     return (
       <li key={id} className="list-group-item list__item">
+        <span>{number}</span>
         <span className="list__later">{leter}</span>
         <span>
           <p>{name}</p>

@@ -2,10 +2,14 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 import TopThree from './topThree';
 
-const TodoList = ({ todos, topThree, allData }) => {
+const TodoList = ({ todos, topThree, allData, page = 1 }) => {
+  let top =
+    page === 1
+      ? (top = <TopThree topThree={topThree} allData={allData} />)
+      : null;
   return (
     <ul className="list-group todo-list">
-      <TopThree topThree={topThree} allData={allData} />
+      {top}
       <TodoListItem todos={todos} />
     </ul>
   );
