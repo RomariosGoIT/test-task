@@ -3,7 +3,8 @@ import TodoListItem from './TodoListItem';
 import TopThree from './topThree';
 
 const TodoList = ({ todos, topThree, allData, page = 1 }) => {
-  let top =
+  let top;
+  top =
     page === 1
       ? (top = <TopThree topThree={topThree} allData={allData} />)
       : null;

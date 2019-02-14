@@ -1,23 +1,25 @@
 import React from 'react';
+import ListElement from './listElement';
 
 const TodoListItem = ({ todos }) => {
-  let id = 0;
-  let number = 3;
-  const elements = todos.map(item => {
-    number++;
-    const { name, count_pub, pageviews } = item;
+  let keyId = 0;
+  const elements = todos.map((item, idx) => {
+    keyId =
+      '_' +
+      Math.random()
+        .toString(36)
+        .substr(2, 9);
+    const { id, name, count_pub, pageviews } = item;
     let leter = name.slice(0, 1);
-    id++;
     return (
-      <li key={id} className="list-group-item list__item">
-        <span>{number}</span>
-        <span className="list__later">{leter}</span>
-        <span>
-          <p>{name}</p>
-          <p>{count_pub} публ</p>
-        </span>
-        <p>{pageviews}</p>
-      </li>
+      <ListElement
+        key={keyId}
+        number={id}
+        name={name}
+        leter={leter}
+        count_pub={count_pub}
+        pageviews={pageviews}
+      />
     );
   });
 

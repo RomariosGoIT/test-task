@@ -2,17 +2,19 @@ import React from 'react';
 import gold from '../1st.svg';
 import bronze from '../2nd.svg';
 import silver from '../3rd.svg';
+import ListElement from './listElement';
 
 const TopThree = ({ topThree, allData }) => {
-  let id = 0;
-  let number = 0;
   let show = '';
-
+  let keyId = 0;
   const elements = allData.map(item => {
-    const { name, count_pub, pageviews } = item;
+    keyId =
+      '_' +
+      Math.random()
+        .toString(36)
+        .substr(2, 9);
+    const { id, name, count_pub, pageviews } = item;
     let leter = name.slice(0, 1);
-    number++;
-    id++;
     if (topThree[0] === pageviews) {
       show = <img className="list__icon" src={gold} alt="icon" />;
     }
@@ -25,16 +27,15 @@ const TopThree = ({ topThree, allData }) => {
     }
 
     return (
-      <li key={id} className="list-group-item list__item">
-        <span>{number}</span>
-        <span className="list__later">{leter}</span>
-        <span>
-          <p>{name}</p>
-          <p>{count_pub} публ</p>
-        </span>
-        <span>{show}</span>
-        <p>{pageviews}</p>
-      </li>
+      <ListElement
+        key={keyId}
+        number={id}
+        name={name}
+        leter={leter}
+        count_pub={count_pub}
+        pageviews={pageviews}
+        show={show}
+      />
     );
   });
 

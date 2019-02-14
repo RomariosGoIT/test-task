@@ -31,6 +31,11 @@ class App extends Component {
   };
 
   getTopThree = data => {
+    const test = data.reduce(
+      (acc, arr, idx) => acc.concat({ id: idx + 1, ...arr }),
+      [],
+    );
+
     const top = data.reduce(
       (acc, item) =>
         acc
@@ -40,49 +45,62 @@ class App extends Component {
       [],
     );
 
-    const rest = data.filter(item => top.indexOf(item.pageviews) < 0);
+    const rest = test.filter(item => top.indexOf(item.pageviews) < 0);
 
-    const topList = data
+    const topList = test
       .filter(item => top.indexOf(item.pageviews) >= 0)
       .sort((a, b) => b.pageviews - a.pageviews);
 
-    const arr = [...topList, ...rest];
-
-    this.getPages(rest);
+    this.getPages(rest, 1);
 
     return this.setState({ topThree: top, rest, topList });
   };
 
-  getPages = data => {
-    let start = 0;
-    let end = 10;
-    if (this.state.page === 1) {
+  getPages = (data, page) => {
+    if (page < 1) return;
+    let start = (page - 1) * 10;
+    let end = page * 10;
+
+    if (page === 1) {
       end = 7;
     }
+    if (page >= 2) {
+      start -= 3;
+      end -= 3;
+    }
+
     let pages = data.slice(start, end);
     return this.setState({ pages });
   };
 
   onNext = val => {
-    this.setState({ page: this.state.page + val });
-    return this.getPages(this.state.rest);
+    let curPage = this.state.page + val;
+    this.setState({ page: curPage });
+    return this.getPages(this.state.rest, curPage);
   };
 
   onPrev = val => {
-    this.setState({ page: this.state.page - val });
-    return this.getPages(this.state.rest);
+    let curPage = this.state.page - val;
+    this.setState({ page: curPage });
+    return this.getPages(this.state.rest, curPage);
   };
 
   render() {
-    const { data, term, topThree, rest, pages, topList } = this.state;
+    const { data, term, topThree, rest, pages, topList, page } = this.state;
     const updatedData = this.searchHandler(rest, term);
     let content = '';
+    let cont = '';
     if (data && topThree && pages && topList) {
-      let cont = term === '' ? (cont = pages) : (cont = updatedData);
+      cont = term === '' ? (cont = pages) : (cont = updatedData);
       content = (
         <div className="list">
           <SearchPanel setSearchValue={this.setSearchValue} />
-          <TodoList todos={cont} topThree={topThree} allData={topList} />
+          <TodoList
+            todos={cont}
+            topThree={topThree}
+            allData={topList}
+            page={page}
+          />
         </div>
       );
     }
@@ -90,7 +108,12 @@ class App extends Component {
     return (
       <div className="container">
         {content}
-        <Button prev={this.onPrev} next={this.onNext} />
+        <Button
+          prev={this.onPrev}
+          next={this.onNext}
+          currentPage={this.state.page}
+          lasPage={rest}
+        />
       </div>
     );
   }
