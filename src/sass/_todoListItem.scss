@@ -24,10 +24,27 @@
 }
 
 .list {
+  &__number {
+    width: 10px;
+    margin-right: 20px;
+    color: #b9aeae;
+  }
+
+  &__block {
+    margin-right: 80px;
+  }
+
+  &__count_pub {
+    color: #b9aeae;
+  }
+
+  &__pageviews {
+    margin-left: auto;
+  }
+
   &__item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     &:nth-child(even) {
       background-color: #eee;
@@ -43,5 +60,17 @@
     justify-content: center;
     align-items: center;
     background-color: #eee;
+    margin-right: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__pages {
+    display: block;
   }
 }

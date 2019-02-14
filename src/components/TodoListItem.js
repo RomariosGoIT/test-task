@@ -3,7 +3,7 @@ import ListElement from './listElement';
 
 const TodoListItem = ({ todos }) => {
   let keyId = 0;
-  const elements = todos.map((item, idx) => {
+  const elements = todos.map((item) => {
     keyId =
       '_' +
       Math.random()
