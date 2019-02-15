@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchPanel from './components/searchPanel';
+import SearchPanel from './components/SearchPanel';
 import PersonsList from './components/personsList';
 import Buttons from './components/buttons';
 import './main.scss';
