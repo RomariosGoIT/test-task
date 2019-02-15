@@ -1,9 +1,9 @@
 import React from 'react';
 import PersonListItem from './personListItem';
-import TopThree from './topThree';
+import TopThreePerson from './topThreePerson';
 import { PersonConsumer } from '../context';
 
-const TodoList = () => {
+const PersonsList = () => {
   let personsList = '';
   return (
     <PersonConsumer>
@@ -17,7 +17,7 @@ const TodoList = () => {
         return (
           <ul className="list-group persons-list">
             {value.page === 1 ? (
-              <TopThree
+              <TopThreePerson
                 topThree={value.topThreePageviews}
                 allData={value.topThreePerson}
               />
@@ -30,4 +30,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default PersonsList;

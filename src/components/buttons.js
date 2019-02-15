@@ -16,10 +16,13 @@ const Buttons = () => {
             ) : null}
             {
               <span className="pagination__pages">
-                page {value.page} of{' '}
-                {value.restPersonList
-                  ? Math.ceil(value.restPersonList.length / 10)
-                  : null}
+                {value.pageCount.start === 0
+                  ? value.pageCount.start + 1
+                  : value.pageCount.start + 4}
+                -
+                {value.pageCount.end > value.data.length
+                  ? value.data.length
+                  : value.pageCount.end + 3}
               </span>
             }
             {!value.restPersonList ? null : value.page !==

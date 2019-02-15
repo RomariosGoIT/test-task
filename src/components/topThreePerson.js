@@ -5,7 +5,7 @@ import silver from '../image/3rd.svg';
 import ListElement from './listElement';
 import { getColor, getUniqueId } from './helpers';
 
-const TopThree = ({ topThree, allData }) => {
+const TopThreePerson = ({ topThree, allData }) => {
   let show = '';
   const elements = allData.map(item => {
     const { id, name, pageviews } = item;
@@ -35,4 +35,4 @@ const TopThree = ({ topThree, allData }) => {
   return elements;
 };
 
-export default TopThree;
+export default TopThreePerson;

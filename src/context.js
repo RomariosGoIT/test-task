@@ -14,6 +14,8 @@ class PersonProvider extends Component {
     topThreePerson: [],
     page: 1,
     label: '',
+    sortBy: '',
+    pageCount: { start: 0, end: 0 },
   };
 
   componentDidMount() {
@@ -75,7 +77,7 @@ class PersonProvider extends Component {
     }
 
     let pages = data.slice(start, end);
-    return this.setState({ pages });
+    return this.setState({ pages, pageCount: { start, end } });
   };
 
   onNextPage = val => {
@@ -96,6 +98,33 @@ class PersonProvider extends Component {
     this.setState({ label: value });
   };
 
+  sortPersonsListHandler = ({ target }) => {
+    const sortData = [...this.state.restPersonList].sort((a, b) => {
+      if (target.value === 'name') {
+        let x = a[target.value].toLowerCase();
+        let y = b[target.value].toLowerCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      }
+      return b[target.value] - a[target.value];
+    });
+    const update = sortData.map((item, idx = 4) => {
+      return {
+        id: idx + 4,
+        name: item.name,
+        count_pub: item.count_pub,
+        pageviews: item.pageviews,
+      };
+    });
+    this.getPages(update, 1);
+    return this.setState({ restPersonList: update });
+  };
+
   render() {
     return (
       <PersonContext.Provider
@@ -107,6 +136,7 @@ class PersonProvider extends Component {
           setSearchValue: this.setSearchValue,
           handleLabelValue: this.handleLabelValue,
           searchHandler: this.searchHandler,
+          sortPersonsListHandler: this.sortPersonsListHandler,
         }}>
         {this.props.children}
       </PersonContext.Provider>
