@@ -1,36 +1,40 @@
 import React from 'react';
+import { PersonConsumer } from '../context';
 
-const Button = ({ prev, next, currentPage, lasPage }) => {
-  let val = 1;
-  const prevBtn =
-    currentPage !== 1 ? (
-      <button className="btn btn-prev" onClick={() => prev(val)}>
-        Prev
-      </button>
-    ) : (
-      ''
-    );
-  let nextBtn = '';
-  if (lasPage) {
-    nextBtn =
-      currentPage !== Math.ceil(lasPage.length / 10) ? (
-        <button className="btn btn-next" onClick={() => next(val)}>
-          Next
-        </button>
-      ) : (
-        ''
-      );
-  }
-
-  let curPage = <span className="pagination__pages">{currentPage}</span>;
-
+const Buttons = () => {
   return (
-    <div className="pagination">
-      {prevBtn}
-      {curPage}
-      {nextBtn}
-    </div>
+    <PersonConsumer>
+      {value => {
+        return (
+          <div className="pagination">
+            {value.page !== 1 ? (
+              <button
+                className="btn btn-prev"
+                onClick={() => value.onPrevPage(1)}>
+                <i className="fas fa-angle-left" />
+              </button>
+            ) : null}
+            {
+              <span className="pagination__pages">
+                page {value.page} of{' '}
+                {value.restPersonList
+                  ? Math.ceil(value.restPersonList.length / 10)
+                  : null}
+              </span>
+            }
+            {!value.restPersonList ? null : value.page !==
+              Math.ceil(value.restPersonList.length / 10) ? (
+              <button
+                className="btn btn-next"
+                onClick={() => value.onNextPage(1)}>
+                <i className="fas fa-angle-right" />
+              </button>
+            ) : null}
+          </div>
+        );
+      }}
+    </PersonConsumer>
   );
 };
 
-export default Button;
+export default Buttons;

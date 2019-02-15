@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
+import img from '../image/search.png';
+import { PersonConsumer } from '../context';
 
 class SearchPanel extends Component {
-  state = {
-    label: '',
-  };
-
-  handleLabelValue = ({ target }) => {
-    let value = target.value;
-    this.props.setSearchValue(value);
-    this.setState({ label: value });
-  };
-
   render() {
     return (
-      <input
-        type="text"
-        className="form-control search-input"
-        placeholder="type to search"
-        onChange={this.handleLabelValue}
-        value={this.state.label}
-      />
+      <PersonConsumer>
+        {value => {
+          return (
+            <form className="search__form">
+              <img src={img} alt="search" className="search__img" />
+              <input
+                type="text"
+                className="search__input"
+                placeholder="Поиск авторов по имени"
+                onChange={value.handleLabelValue}
+                value={value.label}
+              />
+            </form>
+          );
+        }}
+      </PersonConsumer>
     );
   }
 }
