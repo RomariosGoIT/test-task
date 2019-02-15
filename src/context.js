@@ -18,12 +18,12 @@ class PersonProvider extends Component {
     pageCount: { start: 0, end: 0 },
   };
 
-  componentDidMount() {
-    this.getTopThree(this.state.data);
-  }
-
   componentWillMount() {
-    this.getTopThree(this.state.data);
+    try {
+      this.dataHandler(this.state.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   setSearchValue = str => {
@@ -35,7 +35,7 @@ class PersonProvider extends Component {
     return data.filter(item => item.name.toLowerCase().indexOf(value) > -1);
   };
 
-  getTopThree = data => {
+  dataHandler = data => {
     const updatedData = data.reduce(
       (acc, arr, idx) => acc.concat({ id: idx + 1, ...arr }),
       [],
