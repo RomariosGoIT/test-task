@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import img from '../image/search.png';
 import { PersonConsumer } from '../context';
 
-class SearchPanel extends Component {
-  render() {
+const  SearchPanel = () => {
     return (
       <PersonConsumer>
         {value => {
@@ -22,7 +21,6 @@ class SearchPanel extends Component {
         }}
       </PersonConsumer>
     );
-  }
 }
 
 export default SearchPanel;
